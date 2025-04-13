@@ -22,5 +22,5 @@ python Q1_part2.py
 
 ### Run evaluation script:
 ```bash
-python evalResult.py EN/dev.out EN/dev.p1.out
+python EvalScript/evalResult.py EN/dev.out EN/dev.p1.out
 ```
