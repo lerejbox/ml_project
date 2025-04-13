@@ -5,7 +5,7 @@ def main():
     emission_params = estimate_emission_parameters('./EN/train')
     
     # 2. Apply the system to the development set
-    predict_tags(emission_params, './EN/dev.in', './EN/dev.p2.out')
+    predict_tags(emission_params, './EN/dev.in', './EN/dev.p1.out')
     
     # 3. Calculate precision, recall, and F-score using the EvalScript/evalResult.py
 
