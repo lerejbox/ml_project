@@ -117,9 +117,7 @@ def predict_tags(emission_params, dev_in_path, output_path):
                         best_tag = tag
                         best_prob = prob
             
-            # Default to most common tag (likely 'O' or 'B-NP') if word is not seen
             if best_tag is None:
                 best_tag = 'O'  # Or replace with your most common tag
-            
-            # Write in the format expected by the evaluation script: word space tag
+
             dev_out.write(f"{word} {best_tag}\n")
