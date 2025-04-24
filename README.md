@@ -43,4 +43,10 @@ python Q2_part2.py
 
 ```bash
 python EvalScript/evalResult.py EN/dev.out EN/dev.p2.out
-'''
+```
+
+### Run Q3.py to output 'dev.p3.out' for evaluation
+
+```bash
+python Q3.py
+```
