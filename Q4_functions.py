@@ -55,27 +55,27 @@ def calculate_metrics(true_tags, pred_tags):
     return precision, recall, f1
 
 
-def main():
-    """Main function"""
-    if len(sys.argv) != 3:
-        print("Usage: python simple_metrics.py <true_tags_file> <pred_tags_file>")
-        sys.exit(1)
+# def main():
+#     """Main function"""
+#     if len(sys.argv) != 3:
+#         print("Usage: python simple_metrics.py <true_tags_file> <pred_tags_file>")
+#         sys.exit(1)
 
-    true_file = sys.argv[1]
-    pred_file = sys.argv[2]
+#     true_file = sys.argv[1]
+#     pred_file = sys.argv[2]
 
-    # Read files
-    _, true_tags = read_file(true_file)
-    _, pred_tags = read_file(pred_file)
+#     # Read files
+#     _, true_tags = read_file(true_file)
+#     _, pred_tags = read_file(pred_file)
 
-    # Calculate metrics
-    precision, recall, f1 = calculate_metrics(true_tags, pred_tags)
+#     # Calculate metrics
+#     precision, recall, f1 = calculate_metrics(true_tags, pred_tags)
 
-    # Print results
-    print(f"Precision: {precision:.4f}")
-    print(f"Recall: {recall:.4f}")
-    print(f"F1 Score: {f1:.4f}")
+#     # Print results
+#     print(f"Precision: {precision:.4f}")
+#     print(f"Recall: {recall:.4f}")
+#     print(f"F1 Score: {f1:.4f}")
 
 
-if __name__ == "__main__":
-    main()
+# if __name__ == "__main__":
+#     main()

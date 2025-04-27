@@ -2,6 +2,8 @@ import sys
 
 import numpy as np
 
+from Q4_functions import calculate_metrics
+
 
 class EchoStateNetwork:
     def __init__(self, input_size, reservoir_size, spectral_radius=0.9):
@@ -99,7 +101,6 @@ def extract_features(word):
 
     # Word length (normalized)
     features.append(min(len(word) / 15.0, 1.0))
-    print(features)
     return np.array(features)
 
 
@@ -209,6 +210,16 @@ def main():
             f.write(f"{word} {tag}\n")
 
     print(f"\nPredictions written to {output_file}")
+
+    # Read files
+    _, true_tags = read_file(dev_out_file)
+    _, pred_tags = read_file(output_file)
+    precision, recall, f1 = calculate_metrics(true_tags, pred_tags)
+
+    # Print results
+    print(f"Precision: {precision:.4f}")
+    print(f"Recall: {recall:.4f}")
+    print(f"F1 Score: {f1:.4f}")
 
 
 if __name__ == "__main__":
