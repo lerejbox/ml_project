@@ -1,4 +1,3 @@
-import os
 import sys
 
 import numpy as np
@@ -100,7 +99,7 @@ def extract_features(word):
 
     # Word length (normalized)
     features.append(min(len(word) / 15.0, 1.0))
-
+    print(features)
     return np.array(features)
 
 
@@ -156,7 +155,6 @@ def ner_with_esn(train_file, dev_in_file, dev_out_file, reservoir_size=100):
     print("Preparing data...")
     X_train, y_train, unique_tags = prepare_data(train_words, train_tags)
     X_dev = prepare_data(dev_in_words)
-
     # Get input feature size
     input_size = X_train.shape[1]
     print(f"Input feature size: {input_size}")
@@ -179,11 +177,7 @@ def ner_with_esn(train_file, dev_in_file, dev_out_file, reservoir_size=100):
     idx_to_tag = {i: tag for i, tag in enumerate(unique_tags)}
     pred_tags = [idx_to_tag[np.argmax(pred)] for pred in y_pred]
 
-    # Calculate accuracy
-    accuracy = sum(p == t for p, t in zip(pred_tags, dev_out_tags)) / len(dev_out_tags)
-    print(f"Accuracy: {accuracy:.4f}")
-
-    return esn, pred_tags, accuracy, unique_tags
+    return esn, pred_tags, unique_tags
 
 
 def main():
@@ -199,19 +193,14 @@ def main():
     dev_out_file = sys.argv[3]
 
     # Run NER with ESN
-    esn, predictions, accuracy, unique_tags = ner_with_esn(
+    esn, predictions, unique_tags = ner_with_esn(
         train_file, dev_in_file, dev_out_file, reservoir_size=300
     )
 
     # Print results
-    print(f"Accuracy on dev set: {accuracy:.2%}")
-    print(f"Unique tags: {unique_tags}")
 
     # Print first 10 predictions
     dev_in_words, _ = read_file(dev_in_file)
-    print("\nSample predictions:")
-    for i in range(min(10, len(dev_in_words))):
-        print(f"{dev_in_words[i]} {predictions[i]}")
 
     # Save predictions to file
     output_file = "./EN/dev.p4.out"

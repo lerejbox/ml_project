@@ -83,7 +83,7 @@ def evaluate_ner_predictions(gold_file, pred_file):
     return precision, recall, f1
 
 
-def k_best_viterbi_final(tokens, emission_params, transition_probs, k=4):
+def k_best_viterbi(tokens, emission_params, transition_probs, k=4):
     """K-best Viterbi implementation with proper smoothing."""
 
     # Extract all tags
@@ -190,7 +190,7 @@ def k_best_viterbi_final(tokens, emission_params, transition_probs, k=4):
     return path[::-1]
 
 
-def process_file_final(input_file, output_file, emission_params, transition_probs, k=4):
+def process_file(input_file, output_file, emission_params, transition_probs, k=4):
     """Process file with k-best Viterbi."""
 
     with open(input_file, "r", encoding="utf-8") as f:
@@ -204,11 +204,11 @@ def process_file_final(input_file, output_file, emission_params, transition_prob
             if current_sentence:
                 if k == 1:
                     # Use standard Viterbi for k=1
-                    tags = k_best_viterbi_final(
+                    tags = k_best_viterbi(
                         current_sentence, emission_params, transition_probs, k=1
                     )
                 else:
-                    tags = k_best_viterbi_final(
+                    tags = k_best_viterbi(
                         current_sentence, emission_params, transition_probs, k
                     )
 
@@ -221,11 +221,11 @@ def process_file_final(input_file, output_file, emission_params, transition_prob
 
     if current_sentence:
         if k == 1:
-            tags = k_best_viterbi_final(
+            tags = k_best_viterbi(
                 current_sentence, emission_params, transition_probs, k=1
             )
         else:
-            tags = k_best_viterbi_final(
+            tags = k_best_viterbi(
                 current_sentence, emission_params, transition_probs, k
             )
 
@@ -236,12 +236,10 @@ def process_file_final(input_file, output_file, emission_params, transition_prob
         f.write("\n".join(predictions))
 
 
-def final_test(input_file, emission_params, transition_probs):
+def test(input_file, emission_params, transition_probs):
     # Test with k=4
     print("\nTesting with k=4 (4th best sequence):")
-    process_file_final(
-        input_file, "EN/dev.p3.out", emission_params, transition_probs, k=4
-    )
+    process_file(input_file, "EN/dev.p3.out", emission_params, transition_probs, k=4)
     precision, recall, f1 = evaluate_ner_predictions("EN/dev.out", "EN/dev.p3.out")
     print(f"Precision: {precision:.4f}")
     print(f"Recall: {recall:.4f}")
@@ -258,4 +256,4 @@ if __name__ == "__main__":
 
     training_data = read_training_data("EN/train")
     transition_params = estimate_transition_parameters(training_data)
-    final_test("EN/dev.in", emission_params, transition_params)
+    test("EN/dev.in", emission_params, transition_params)
